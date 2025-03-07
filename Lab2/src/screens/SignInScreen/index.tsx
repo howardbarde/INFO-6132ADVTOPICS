@@ -22,22 +22,31 @@ export default function SignInScreen({ navigation }: Props) {
     <View style={styles.container}>
       <Image source={require("../../../assets/loginPic3.png")} style={styles.logo} />
 
-      <TextInput 
-        style={styles.input} 
-        placeholder="Username" 
+      <Text style={styles.title}>Welcome Back!</Text>
+      <Text style={styles.subtitle}>Please sign in to continue</Text>
+
+      <TextInput
+        style={styles.input}
+        placeholder="Username"
         autoCapitalize="none"
-        onChangeText={setUsername} 
+        placeholderTextColor="#888"
+        onChangeText={setUsername}
       />
-      <TextInput 
-        style={styles.input} 
-        placeholder="Password" 
-        secureTextEntry 
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        secureTextEntry
         autoCapitalize="none"
-        onChangeText={setPassword} 
+        placeholderTextColor="#888"
+        onChangeText={setPassword}
       />
 
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity>
+        <Text style={styles.forgotPassword}>Forgot Password?</Text>
       </TouchableOpacity>
     </View>
   );

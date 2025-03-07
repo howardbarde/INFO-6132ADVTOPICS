@@ -7,6 +7,7 @@ import { Picker } from "@react-native-picker/picker";
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamList } from "../../navigation/AppNavigator";
 import { TransactionContext } from "../../context/TransactionContext";
+import { MaterialIcons } from "@expo/vector-icons";
 import styles from "./styles";
 
 type Props = StackScreenProps<RootStackParamList, "AddTransaction">;
@@ -68,8 +69,9 @@ export default function AddTransactionScreen({ navigation }: Props) {
         <View style={styles.container}>
           <Text style={styles.title}>Add Transaction</Text>
 
-          <TouchableOpacity onPress={() => setShowDatePicker(true)} style={styles.input}>
-            <Text>{date.toDateString()}</Text>
+          <TouchableOpacity onPress={() => setShowDatePicker(true)} style={styles.datePicker}>
+            <MaterialIcons name="calendar-today" size={20} color="#007bff" />
+            <Text style={styles.dateText}>{date.toDateString()}</Text>
           </TouchableOpacity>
 
           {showDatePicker && (
@@ -99,25 +101,31 @@ export default function AddTransactionScreen({ navigation }: Props) {
 
           <TextInput style={styles.input} placeholder="Location" onChangeText={setLocation} />
 
-          <Picker
-            selectedValue={transactionType}
-            onValueChange={(itemValue) => setTransactionType(itemValue)}
-            style={styles.picker}
-          >
-            <Picker.Item label="Credit" value="Credit" />
-            <Picker.Item label="Debit" value="Debit" />
-            <Picker.Item label="Refund" value="Refund" />
-          </Picker>
+          <View style={styles.pickerContainer}>
+            <Text style={styles.pickerLabel}>Transaction Type</Text>
+            <Picker
+              selectedValue={transactionType}
+              onValueChange={(itemValue) => setTransactionType(itemValue)}
+              style={styles.picker}
+            >
+              <Picker.Item label="Credit" value="Credit" />
+              <Picker.Item label="Debit" value="Debit" />
+              <Picker.Item label="Refund" value="Refund" />
+            </Picker>
+          </View>
 
-          <Picker
-            selectedValue={category}
-            onValueChange={(itemValue) => setCategory(itemValue)}
-            style={styles.picker}
-          >
-            <Picker.Item label="Shopping" value="Shopping" />
-            <Picker.Item label="Travel" value="Travel" />
-            <Picker.Item label="Utility" value="Utility" />
-          </Picker>
+          <View style={styles.pickerContainer}>
+            <Text style={styles.pickerLabel}>Category</Text>
+            <Picker
+              selectedValue={category}
+              onValueChange={(itemValue) => setCategory(itemValue)}
+              style={styles.picker}
+            >
+              <Picker.Item label="Shopping" value="Shopping" />
+              <Picker.Item label="Travel" value="Travel" />
+              <Picker.Item label="Utility" value="Utility" />
+            </Picker>
+          </View>
 
           <TouchableOpacity style={styles.button} onPress={handleAddTransaction}>
             <Text style={styles.buttonText}>Add Transaction</Text>

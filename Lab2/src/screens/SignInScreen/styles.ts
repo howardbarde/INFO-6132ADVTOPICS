@@ -1,38 +1,65 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-  container: { 
-    flex: 1, 
-    justifyContent: "center", 
-    alignItems: "center", 
-    padding: 20, 
-    backgroundColor: "#f5f5f5" 
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+    backgroundColor: "#f0f4f8",
   },
-  logo: { 
-    width: 150, 
-    height: 150, 
-    marginBottom: 20 
+  logo: {
+    width: 120,
+    height: 120,
+    marginBottom: 20,
   },
-  input: { 
-    width: "100%", 
-    padding: 15, 
-    borderWidth: 1, 
-    borderRadius: 10, 
-    marginBottom: 10, 
-    backgroundColor: "#fff", 
-    borderColor: "#ddd" 
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 5,
   },
-  button: { 
-    backgroundColor: "#007bff", 
-    padding: 15, 
-    borderRadius: 10, 
-    width: "100%", 
-    alignItems: "center", 
-    marginTop: 10 
+  subtitle: {
+    fontSize: 16,
+    color: "#666",
+    marginBottom: 20,
   },
-  buttonText: { 
-    color: "#fff", 
-    fontSize: 18, 
-    fontWeight: "bold" 
+  input: {
+    width: "100%",
+    padding: 15,
+    borderRadius: 12,
+    marginBottom: 12,
+    backgroundColor: "#fff",
+    borderColor: "#ddd",
+    borderWidth: 1,
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+  },
+  button: {
+    backgroundColor: "#007bff",
+    padding: 15,
+    borderRadius: 12,
+    width: "100%",
+    alignItems: "center",
+    marginTop: 10,
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    shadowOffset: { width: 0, height: 3 },
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  forgotPassword: {
+    marginTop: 15,
+    color: "#007bff",
+    fontSize: 14,
+    fontWeight: "500",
   },
 });

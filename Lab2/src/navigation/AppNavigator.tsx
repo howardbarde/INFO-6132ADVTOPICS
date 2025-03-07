@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import SignInScreen from "../screens/SignInScreen";
 import DashboardScreen from "../screens/DashboardScreen";
 import AddTransactionScreen from "../screens/AddTransactionScreen";
-import TransactionDetailScreen from "../screens/TransactionDetailScreen/TransactionDetailScreen";
+import TransactionDetailScreen from "../screens/TransactionDetailScreen";
 import { Transaction } from "../types";
 
 export type RootStackParamList = {

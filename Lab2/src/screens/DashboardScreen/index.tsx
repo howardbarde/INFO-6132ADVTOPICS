@@ -3,6 +3,7 @@ import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamList } from "../../navigation/AppNavigator";
 import { TransactionContext } from "../../context/TransactionContext";
+import { MaterialIcons } from "@expo/vector-icons"; // Import icon library
 import styles from "./styles";
 
 type Props = StackScreenProps<RootStackParamList, "Dashboard">;
@@ -32,7 +33,8 @@ export default function DashboardScreen({ navigation }: Props) {
       <View style={styles.toolbar}>
         <Text style={styles.title}>Dashboard</Text>
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-          <Text style={styles.logoutText}>Logout</Text>
+          <MaterialIcons name="logout" size={20} color="#fff" />
+          <Text style={styles.logoutText}> Logout</Text>
         </TouchableOpacity>
       </View>
 
@@ -47,18 +49,28 @@ export default function DashboardScreen({ navigation }: Props) {
               style={styles.transactionItem}
               onPress={() => navigation.navigate("TransactionDetail", { transaction: item })}
             >
-              <Text style={styles.transactionText}>{item.description}</Text>
-              <Text style={styles.transactionAmount}>${item.amount.toFixed(2)}</Text>
+              <View>
+                <Text style={styles.transactionText}>{item.description}</Text>
+                <Text style={styles.transactionDate}>{item.date}</Text>
+              </View>
+              <Text
+                style={[
+                  styles.transactionAmount,
+                  item.type === "Credit" ? styles.credit : styles.debit,
+                ]}
+              >
+                {item.type === "Credit" ? "+" : "-"}${item.amount.toFixed(2)}
+              </Text>
             </TouchableOpacity>
           )}
         />
       )}
 
       <TouchableOpacity
-        style={styles.addButton}
+        style={styles.fab}
         onPress={() => navigation.navigate("AddTransaction")}
       >
-        <Text style={styles.addButtonText}>+ Add Transaction</Text>
+        <MaterialIcons name="add" size={28} color="#fff" />
       </TouchableOpacity>
     </View>
   );
