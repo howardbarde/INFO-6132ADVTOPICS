@@ -20,8 +20,12 @@ export default function AppNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="SignIn">
-        <Stack.Screen name="SignIn" component={SignInScreen} />
-        <Stack.Screen name="Dashboard" component={DashboardScreen} />
+        <Stack.Screen name="SignIn" component={SignInScreen} options={{ headerShown: false }} />
+        <Stack.Screen 
+          name="Dashboard" 
+          component={DashboardScreen} 
+          options={{ headerLeft: () => null }}
+        />
         <Stack.Screen name="AddTransaction" component={AddTransactionScreen} />
         <Stack.Screen name="TransactionDetail" component={TransactionDetailScreen} />
       </Stack.Navigator>
