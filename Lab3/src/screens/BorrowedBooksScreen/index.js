@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { db } from '../../../firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useBorrowedBooks } from '../../contexts/BorrowedBooksContext';

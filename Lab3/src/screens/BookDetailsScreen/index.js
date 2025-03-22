@@ -48,7 +48,6 @@ const BookDetailsScreen = ({ route }) => {
           books: [...borrowedBooksData, book],
         }, { merge: true });
 
-        // Update the context state immediately
         setBorrowedBooks([...borrowedBooks, book]);
 
       } else {
@@ -57,7 +56,6 @@ const BookDetailsScreen = ({ route }) => {
           books: [book],
         });
 
-        // Update the context state immediately
         setBorrowedBooks([book]);
       }
 
