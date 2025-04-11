@@ -55,6 +55,15 @@ export default function CreateEventScreen({ navigation }) {
         createdAt: serverTimestamp(),
         favourite: false,
       });
+
+      // ✅ Clear all fields after successful creation
+      setTitle('');
+      setDescription('');
+      setLocation('');
+      setDate('');
+      setTime('');
+
+      Alert.alert('Success', 'Event created successfully');
       navigation.goBack();
     } catch (error) {
       Alert.alert('Error', error.message);
