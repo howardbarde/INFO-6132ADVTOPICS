@@ -4,14 +4,13 @@ import {
   Text,
   FlatList,
   Alert,
-  StyleSheet,
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
 import { ref, onValue, remove, update } from 'firebase/database';
 import { auth, db } from '../../../firebase';
 import EventCard from '../../components/EventCard';
-import styles from "./styles";
+import styles from './styles';
 
 export default function FavouritesScreen({ navigation }) {
   const [favourites, setFavourites] = useState([]);
@@ -19,13 +18,16 @@ export default function FavouritesScreen({ navigation }) {
   useEffect(() => {
     const userId = auth.currentUser?.uid;
     const eventsRef = ref(db, 'events');
+
     const unsubscribe = onValue(eventsRef, (snapshot) => {
       const data = snapshot.val() || {};
       const favs = Object.entries(data)
         .filter(([_, event]) => event.ownerId === userId && event.favourite)
         .map(([id, event]) => ({ id, ...event }));
+
       setFavourites(favs);
     });
+
     return () => unsubscribe();
   }, []);
 
@@ -42,7 +44,9 @@ export default function FavouritesScreen({ navigation }) {
 
   const handleToggleFavourite = async (id, currentFavourite) => {
     try {
-      await update(ref(db, `events/${id}`), { favourite: !currentFavourite });
+      await update(ref(db, `events/${id}`), {
+        favourite: !currentFavourite,
+      });
     } catch (error) {
       Alert.alert('Error', 'Could not update favourite status');
     }
@@ -64,15 +68,17 @@ export default function FavouritesScreen({ navigation }) {
       <View style={styles.container}>
         <FlatList
           data={favourites}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <EventCard
               event={item}
               onEdit={() => navigation.navigate('EditEvent', { event: item })}
               onDelete={() => handleDelete(item.id)}
-              onToggleFavourite={() => handleToggleFavourite(item.id, item.favourite)}
+              onToggleFavourite={() =>
+                handleToggleFavourite(item.id, item.favourite)
+              }
             />
           )}
-          keyExtractor={(item) => item.id}
           contentContainerStyle={[
             styles.eventListContainer,
             favourites.length === 0 && styles.emptyListContainer,

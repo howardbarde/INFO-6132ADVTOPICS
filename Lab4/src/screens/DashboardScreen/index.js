@@ -10,7 +10,7 @@ import {
 import { ref, onValue, remove, update } from 'firebase/database';
 import { auth, db } from '../../../firebase';
 import EventCard from '../../components/EventCard';
-import styles from "./styles";
+import styles from './styles';
 
 export default function DashboardScreen({ navigation }) {
   const [events, setEvents] = useState([]);
@@ -18,13 +18,16 @@ export default function DashboardScreen({ navigation }) {
   useEffect(() => {
     const userId = auth.currentUser?.uid;
     const eventsRef = ref(db, 'events');
+
     const unsubscribe = onValue(eventsRef, (snapshot) => {
       const data = snapshot.val() || {};
-      const filtered = Object.entries(data)
+      const filteredEvents = Object.entries(data)
         .filter(([_, event]) => event.ownerId === userId)
         .map(([id, event]) => ({ id, ...event }));
-      setEvents(filtered);
+
+      setEvents(filteredEvents);
     });
+
     return () => unsubscribe();
   }, []);
 
@@ -41,7 +44,9 @@ export default function DashboardScreen({ navigation }) {
 
   const handleToggleFavourite = async (id, currentFavourite) => {
     try {
-      await update(ref(db, `events/${id}`), { favourite: !currentFavourite });
+      await update(ref(db, `events/${id}`), {
+        favourite: !currentFavourite,
+      });
     } catch (error) {
       Alert.alert('Error', 'Could not update favourite status');
     }
@@ -63,6 +68,7 @@ export default function DashboardScreen({ navigation }) {
       <View style={styles.container}>
         <FlatList
           data={events}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <EventCard
               event={item}
@@ -71,7 +77,6 @@ export default function DashboardScreen({ navigation }) {
               onToggleFavourite={handleToggleFavourite}
             />
           )}
-          keyExtractor={(item) => item.id}
           contentContainerStyle={[
             styles.eventListContainer,
             events.length === 0 && styles.emptyListContainer,
