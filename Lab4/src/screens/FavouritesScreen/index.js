@@ -4,10 +4,11 @@ import {
   Text,
   FlatList,
   Alert,
+  StyleSheet,
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import { ref, onValue, update } from 'firebase/database';
+import { ref, onValue, remove, update } from 'firebase/database';
 import { auth, db } from '../../../firebase';
 import EventCard from '../../components/EventCard';
 import styles from "./styles";
@@ -28,15 +29,23 @@ export default function FavouritesScreen({ navigation }) {
     return () => unsubscribe();
   }, []);
 
-  const handleUnfavourite = (id) => {
-    Alert.alert('Remove Favourite', 'Are you sure you want to remove this from favourites?', [
+  const handleDelete = (id) => {
+    Alert.alert('Delete Event', 'Are you sure you want to delete this event?', [
       { text: 'Cancel', style: 'cancel' },
       {
-        text: 'Remove',
+        text: 'Delete',
         style: 'destructive',
-        onPress: () => update(ref(db, `events/${id}`), { favourite: false }),
+        onPress: () => remove(ref(db, `events/${id}`)),
       },
     ]);
+  };
+
+  const handleToggleFavourite = async (id, currentFavourite) => {
+    try {
+      await update(ref(db, `events/${id}`), { favourite: !currentFavourite });
+    } catch (error) {
+      Alert.alert('Error', 'Could not update favourite status');
+    }
   };
 
   useLayoutEffect(() => {
@@ -58,9 +67,9 @@ export default function FavouritesScreen({ navigation }) {
           renderItem={({ item }) => (
             <EventCard
               event={item}
-              onDelete={() => handleUnfavourite(item.id)}
-              onToggleFavourite={() => handleUnfavourite(item.id)}
-              hideEdit
+              onEdit={() => navigation.navigate('EditEvent', { event: item })}
+              onDelete={() => handleDelete(item.id)}
+              onToggleFavourite={() => handleToggleFavourite(item.id, item.favourite)}
             />
           )}
           keyExtractor={(item) => item.id}
